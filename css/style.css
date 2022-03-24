@@ -73,6 +73,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /*--------------------*/
+:root {
+  --burger-line-height: 6px;
+  --burger-height: 32px;
+  --burger-lines-deg: 45deg;
+}
+
 *, *::after, *::before {
   -webkit-tap-highlight-color: transparent;
 }
@@ -108,11 +114,39 @@ a, a:visited {
   height: 100%;
 }
 
+.lock {
+  overflow: hidden;
+}
+
+.burger.active::before {
+  -webkit-transform: rotateZ(var(--burger-lines-deg));
+          transform: rotateZ(var(--burger-lines-deg));
+  top: calc(var(--burger-height) * 0.5 - var(--burger-line-height) * 0.5);
+}
+.burger.active span {
+  -webkit-transform: scale(0);
+          transform: scale(0);
+}
+.burger.active::after {
+  -webkit-transform: rotateZ(calc(var(--burger-lines-deg) * -1));
+          transform: rotateZ(calc(var(--burger-lines-deg) * -1));
+  bottom: calc(var(--burger-height) * 0.5 - var(--burger-line-height) * 0.5);
+}
+
+.header__list.active {
+  top: 0;
+}
+
 .burger {
+  z-index: 1;
+  position: relative;
   display: none;
   width: 45px;
-  height: 32px;
-  position: relative;
+  height: var(--burger-height);
+}
+.burger, .burger::before, .burger::after, .burger span {
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
 }
 .burger, .burger:focus, .burger:hover, .burger:active {
   background: transparent;
@@ -125,7 +159,7 @@ a, a:visited {
   left: 0;
   display: block;
   width: 100%;
-  height: 6px;
+  height: var(--burger-line-height);
 }
 .burger::before {
   background: #ff3095;
@@ -133,9 +167,10 @@ a, a:visited {
 }
 .burger span {
   background: #ff6475;
-  top: 13px;
+  top: calc(var(--burger-height) * 0.5 - var(--burger-line-height) * 0.5);
 }
 .burger::after {
+  content: "";
   background: #ff885f;
   bottom: 0;
 }
@@ -156,6 +191,7 @@ a, a:visited {
   width: 207px;
   height: 47px;
   border: 1px solid #f82370;
+  background: #fbfbfb;
   font-size: 16px;
   line-height: 45px;
   text-align: center;
@@ -239,7 +275,7 @@ a, a:visited {
           flex: 1 1 auto;
 }
 
-.list li a:focus, .list li a:hover {
+.list__link:focus, .list__link:hover {
   color: #fc557c;
   border-bottom: 1px solid #fc557c;
 }
@@ -262,8 +298,8 @@ a, a:visited {
 }
 
 .header__list {
-  -webkit-transition: 0.5s;
-  transition: 0.5s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -538,27 +574,27 @@ a, a:visited {
 }
 
 .vk {
-  width: 35px;
+  width: 30px;
   height: 21px;
-  background: url("../img/icons/vk.png");
+  background: url("../img/icons/vk.png") no-repeat center/contain;
 }
 
-.facebook {
-  width: 16px;
-  height: 28px;
-  background: url("../img/icons/facebook.png");
+.github {
+  width: 25px;
+  height: 25px;
+  background: url("../img/icons/github.png") no-repeat center/contain;
 }
 
 .twitter {
-  width: 29px;
-  height: 25px;
-  background: url("../img/icons/twitter.png");
-}
-
-.instagram {
   width: 25px;
   height: 25px;
-  background: url("../img/icons/instagram.png");
+  background: url("../img/icons/twitter.png") no-repeat center/contain;
+}
+
+.pinterest {
+  width: 25px;
+  height: 25px;
+  background: url("../img/icons/pinterest.png") no-repeat center/contain;
 }
 
 .copy {
@@ -609,12 +645,37 @@ a, a:visited {
   }
 
   .header__list {
-    display: none;
-    margin: 0 0 0 -100%;
+    top: -100vh;
+    left: 0;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: white;
+    font-size: 20px;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
             flex-direction: column;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    padding: 100px 0 0 0;
+  }
+  .header__list li:not(:last-child) {
+    margin: 0;
+  }
+  .header__list li a {
+    text-align: center;
+    display: block;
+    padding: 40px 0;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    color: #ff438a;
+    letter-spacing: 0.05em;
+  }
+
+  .header__call, .header__mobile-call-order {
+    z-index: 1;
   }
 
   .me {
@@ -646,19 +707,17 @@ a, a:visited {
   }
 }
 @media (max-width: 767px) {
+  :root {
+    --burger-line-height: 3px;
+    --burger-height: 18px;
+  }
+
   .container {
     padding: 0 20px;
   }
 
   .burger {
-    height: 18px;
     width: 24px;
-  }
-  .burger::before, .burger span, .burger::after {
-    height: 3px;
-  }
-  .burger span {
-    top: 7.5px;
   }
 
   .btn {
