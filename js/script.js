@@ -32,14 +32,6 @@ $(function () {
   $('.list__link').click(function () {
     $('body,.burger,.header__list').removeClass('active')
   });
-  //анимация скрола при нажатии на якоря -----------------
-  $(document).on('click', 'a[href^="#"]', function (event) {
-    event.preventDefault();
-
-    $('html, body').animate({
-      scrollTop: $($.attr(this, 'href')).offset().top
-    }, 500);
-  });
   //popup form---------------------------------------------
   $('.popup__input').blur(function () {
     if (!$(this).val()) {
